@@ -16,7 +16,7 @@ program
     '-v, --verbosity [info]',
     'log level [silent|error|info|debug|verbose]',
     /^(silent|error|info|debug|verbose)$/,
-    'silent'
+    'info'
   )
   .parse(process.argv);
 
@@ -24,4 +24,4 @@ if (!process.argv.slice(2).length) {
   program.help();
 }
 
-scopen(program);
+scopen({ ...program, file: program.args[0], cmd: program.with });

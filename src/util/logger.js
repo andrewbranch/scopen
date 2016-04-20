@@ -6,12 +6,13 @@ winston.addColors({
 });
 
 export const levels = {
-  error: 0,
-  warn: 1,
-  success: 2,
-  info: 3,
-  debug: 4,
-  verbose: 5,
+  silent: 0,
+  error: 1,
+  warn: 2,
+  success: 3,
+  info: 4,
+  debug: 5,
+  verbose: 6,
 };
 
 export default (logLevel = 'info') => {

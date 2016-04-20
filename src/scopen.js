@@ -14,19 +14,21 @@ const remotes = [
 ];
 
 export default options => {
-  const { verbosity, cmd, application, remote, file, branch = getCurrentBranch() } = options;
+  const { verbosity, cmd, application, file } = options;
+  const _branch = options.branch || getCurrentBranch();
+  const _remote = options.remote || 'origin';
   const logger = setupLogger(verbosity);
   logger.debug('Initialized program');
   logger.verbose('Options passed to scopen.js:', options);
 
-  Promise.all([getProjectRoot(), getRemoteURL(remote), branch]).then(([root, rem, br]) => {
+  Promise.all([getProjectRoot(), getRemoteURL(_remote), _branch]).then(([root, remote, branch]) => {
     logger.debug('Got project root:', root);
-    logger.debug('Got remote:', rem);
-    logger.debug('Got branch:', br);
+    logger.debug('Got remote:', remote);
+    logger.debug('Got branch:', branch);
 
     logger.verbose('Testing remote patterns...');
     const matchingRemote = remotes.find(r => {
-      if (r.pattern.test(rem)) {
+      if (r.pattern.test(remote)) {
         logger.debug('Remote matches:', r.name);
         return true;
       }
@@ -40,7 +42,7 @@ export default options => {
       process.exit(1);
     }
 
-    const backrefs = (rem.match(matchingRemote.pattern) || []).slice(1);
+    const backrefs = (remote.match(matchingRemote.pattern) || []).slice(1);
     logger.verbose('Backreferences from pattern match:', backrefs);
     if (backrefs.length !== 2) {
       logger.error('Could not determine both user and repository from remote.');
@@ -62,7 +64,8 @@ export default options => {
     });
 
     logger.success('Opening URL:', url);
-    const openCommand = `${cmd} ${cmd === 'open' ? `-a ${application}` : ''} ${url}`;
+    const args = cmd === 'open' && application ? `-a "${application}"` : '';
+    const openCommand = `${cmd} ${args} ${url}`;
     logger.debug('Running:', openCommand);
 
     return getCmdStdout(openCommand);
