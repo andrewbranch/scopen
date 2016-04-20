@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Open a file in its source-control remote web interface",
   "preferGlobal": true,
+  "main": "dist/src/scopen.js",
   "bin": {
     "scopen": "dist/src/index.js"
   },
@@ -40,6 +41,7 @@
     "tape": "^4.5.1"
   },
   "dependencies": {
-    "commander": "^2.9.0"
+    "commander": "^2.9.0",
+    "lodash": "^4.11.1"
   }
 }

@@ -2,6 +2,7 @@
 
 import program from 'commander';
 import pack from '../package.json';
+import scopen from './scopen';
 
 program
   .version(pack.version)
@@ -16,3 +17,5 @@ program
 if (!process.argv.slice(2).length) {
   program.help();
 }
+
+scopen(program);
