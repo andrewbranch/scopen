@@ -12,6 +12,12 @@ program
   .option('-a, --application [app]', 'application option passed through to `open`')
   .option('-b, --branch [branch]', 'git branch to view file [current branch]')
   .option('-r, --remote [remote]', 'git remote to view file [origin]', 'origin')
+  .option(
+    '-v, --verbosity [info]',
+    'log level [silent|error|info|debug|verbose]',
+    /^(silent|error|info|debug|verbose)$/,
+    'silent'
+  )
   .parse(process.argv);
 
 if (!process.argv.slice(2).length) {
