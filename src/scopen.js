@@ -26,19 +26,25 @@ export default options => {
 
     logger.verbose('Testing remote patterns...');
     const matchingRemote = remotes.find(r => {
-      if (r.remotePattern.test(remote)) {
-        logger.debug('Remote matches:', remote.name);
+      if (r.pattern.test(rem)) {
+        logger.debug('Remote matches:', r.name);
         return true;
       }
 
-      logger.verbose('Remote does not match:', remote);
+      logger.verbose('Remote does not match:', r);
       return false;
     });
 
-    const backrefs = (remote.match(matchingRemote.pattern) || []).slice(1);
+    if (!matchingRemote) {
+      logger.error('Couldn’t match your git remote with known remotes.');
+      process.exit(1);
+    }
+
+    const backrefs = (rem.match(matchingRemote.pattern) || []).slice(1);
     logger.verbose('Backreferences from pattern match:', backrefs);
     if (backrefs.length !== 2) {
       logger.error('Could not determine both user and repository from remote.');
+      process.exit(1);
     }
 
     const user = matchingRemote.getUser(backrefs);
@@ -61,13 +67,13 @@ export default options => {
 
     return getCmdStdout(openCommand);
   }).catch(err => {
-    let message = 'An unknown error occurred.';
+    logger.exitOnError = false;
+    logger.error('An unknown error occurred.');
     if (levels[logger.level] < levels.debug) {
-      message += '\nTry --verbosity=debug or --verbosity=verbose for more info.';
+      logger.error('Try --verbosity=debug or --verbosity=verbose for more info.');
     }
 
     logger.debug(err.message);
     logger.verbose(err.stack);
-    logger.error(message);
   });
 };
