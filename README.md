@@ -5,6 +5,27 @@ Open a file in its source-control remote web interface
  - Write tests
  - Add `--url-only` option (resolves to URL when used as a node_module)
  - Write Atom plugin
+ - Support more git remotes
+
+## Installation
+```shell
+npm install -g scopen
+```
+
+## Usage
+```
+scopen [options] <file>
+
+Options:
+
+  -h, --help               output usage information
+  -V, --version            output the version number
+  -w, --with [cmd]         shell program used to open the URL [open]
+  -a, --application [app]  application option passed through to `open`
+  -b, --branch [branch]    git branch to view file [current branch]
+  -r, --remote [remote]    git remote to view file [origin]
+  -v, --verbosity [info]   log level [silent|error|info|debug|verbose]
+```
 
 ## Contributing
 Please do! Once I add tests and CI, it will run ESLint automatically. In the meantime, please make sure contributions pass the included .eslintrc rules (AirBnb’s configuration).
