@@ -5,6 +5,7 @@ import getProjectRoot from './util/get-project-root';
 import relativePath from './util/relative-path';
 import template from './util/template';
 import setupLogger, { levels } from './util/logger';
+import { dirname } from 'path';
 import * as githubSsh from './remotes/github-ssh';
 import * as githubHttps from './remotes/github-https';
 
@@ -15,13 +16,14 @@ const remotes = [
 
 export default options => {
   const { verbosity, cmd, application, file } = options;
-  const _branch = options.branch || getCurrentBranch();
+  const _cwd = dirname(file);
+  const _branch = options.branch || getCurrentBranch(_cwd);
   const _remote = options.remote || 'origin';
   const logger = setupLogger(verbosity);
   logger.debug('Initialized program');
   logger.verbose('Options passed to scopen.js:', options);
 
-  Promise.all([getProjectRoot(), getRemoteURL(_remote), _branch]).then(([root, remote, branch]) => {
+  Promise.all([getProjectRoot(_cwd), getRemoteURL(_remote, _cwd), _branch]).then(([root, remote, branch]) => {
     logger.debug('Got project root:', root);
     logger.debug('Got remote:', remote);
     logger.debug('Got branch:', branch);
