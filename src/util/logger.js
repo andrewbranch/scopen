@@ -15,7 +15,7 @@ export const levels = {
   verbose: 6,
 };
 
-export default (logLevel = 'info') => {
+export default (logLevel = 'silent') => {
   const logger = new winston.Logger({
     transports: [new winston.transports.Console({ level: testLevel || logLevel })],
   });
