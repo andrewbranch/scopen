@@ -16,14 +16,14 @@ const remotes = [
 
 export default options => {
   const { verbosity, cmd, application, file } = options;
-  const _cwd = dirname(file);
-  const _branch = options.branch || getCurrentBranch(_cwd);
+  const cwd = dirname(file);
+  const _branch = options.branch || getCurrentBranch(cwd);
   const _remote = options.remote || 'origin';
   const logger = setupLogger(verbosity);
   logger.debug('Initialized program');
   logger.verbose('Options passed to scopen.js:', options);
 
-  Promise.all([getProjectRoot(_cwd), getRemoteURL(_remote, _cwd), _branch]).then(([root, remote, branch]) => {
+  Promise.all([getProjectRoot(cwd), getRemoteURL(_remote, cwd), _branch]).then(([root, remote, branch]) => {
     logger.debug('Got project root:', root);
     logger.debug('Got remote:', remote);
     logger.debug('Got branch:', branch);
