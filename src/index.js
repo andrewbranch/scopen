@@ -13,4 +13,6 @@ program
   .option('-r, --remote [remote]', 'git remote to view file [origin]', 'origin')
   .parse(process.argv);
 
-console.log(program);
+if (!process.argv.slice(2).length) {
+  program.help();
+}
