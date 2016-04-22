@@ -23,7 +23,11 @@ export default options => {
   logger.debug('Initialized program');
   logger.verbose('Options passed to scopen.js:', options);
 
-  Promise.all([getProjectRoot(cwd), getRemoteURL(_remote, cwd), _branch]).then(([root, remote, branch]) => {
+  Promise.all([
+    getProjectRoot(cwd),
+    getRemoteURL(_remote, cwd),
+    _branch,
+  ]).then(([root, remote, branch]) => {
     logger.debug('Got project root:', root);
     logger.debug('Got remote:', remote);
     logger.debug('Got branch:', branch);
