@@ -2,6 +2,7 @@ import getCmdStdout from './util/get-cmd-stdout';
 import getCurrentBranch from './util/get-current-branch';
 import getRemoteURL from './util/get-remote-url';
 import getProjectRoot from './util/get-project-root';
+import getRemoteForBranch from './util/get-remote-for-branch.js';
 import relativePath from './util/relative-path';
 import template from './util/template';
 import setupLogger, { levels } from './util/logger';
@@ -17,8 +18,8 @@ const remotes = [
 export default options => {
   const { verbosity, cmd, application, file, urlOnly, isConsole } = options;
   const cwd = dirname(file);
-  const _branch = options.branch || getCurrentBranch(cwd);
-  const _remote = options.remote || 'origin';
+  const _branch = Promise.resolve(options.branch || getCurrentBranch(cwd));
+  const _remote = Promise.resolve(options.remote || _branch.then(getRemoteForBranch(cwd)));
   const logger = setupLogger(isConsole ? verbosity : 'silent');
   logger.debug('Initialized program');
   logger.debug('urlOnly', urlOnly);
@@ -26,7 +27,7 @@ export default options => {
 
   Promise.all([
     getProjectRoot(cwd),
-    getRemoteURL(_remote, cwd),
+    _remote.then(getRemoteURL(cwd)),
     _branch,
   ]).then(([root, remote, branch]) => {
     logger.debug('Got project root:', root);
