@@ -15,12 +15,13 @@ const remotes = [
 ];
 
 export default options => {
-  const { verbosity, cmd, application, file } = options;
+  const { verbosity, cmd, application, file, urlOnly, isConsole } = options;
   const cwd = dirname(file);
   const _branch = options.branch || getCurrentBranch(cwd);
   const _remote = options.remote || 'origin';
-  const logger = setupLogger(verbosity);
+  const logger = setupLogger(isConsole ? verbosity : 'silent');
   logger.debug('Initialized program');
+  logger.debug('urlOnly', urlOnly);
   logger.verbose('Options passed to scopen.js:', options);
 
   Promise.all([
@@ -68,6 +69,10 @@ export default options => {
       branch,
       path,
     });
+
+    if (urlOnly) {
+      return isConsole ? console.log(url) : url;
+    }
 
     logger.success('Opening URL:', url);
     const args = cmd === 'open' && application ? `-a "${application}"` : '';

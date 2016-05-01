@@ -2,8 +2,7 @@
 Open a file in its source-control remote web interface
 
 ## TODO
- - Write tests
- - Add `--url-only` option (resolves to URL when used as a node_module)
+ - Write more tests
  - Write Atom plugin
  - Support more git remotes
 
@@ -25,6 +24,7 @@ Options:
   -b, --branch [branch]    git branch to view file [current branch]
   -r, --remote [remote]    git remote to view file [origin]
   -v, --verbosity [info]   log level [silent|error|info|debug|verbose]
+  -u, --url-only           write the URL to stdout without opening
 ```
 
 ## Contributing
