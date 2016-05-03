@@ -2,7 +2,7 @@ import getCmdStdout from './util/get-cmd-stdout';
 import getCurrentBranch from './util/get-current-branch';
 import getRemoteURL from './util/get-remote-url';
 import getProjectRoot from './util/get-project-root';
-import getRemoteForBranch from './util/get-remote-for-branch.js';
+import getRemoteForBranch from './util/get-remote-for-branch';
 import relativePath from './util/relative-path';
 import template from './util/template';
 import setupLogger, { levels } from './util/logger';
@@ -24,13 +24,12 @@ export default options => {
     urlOnly = false,
     isConsole = false,
   } = options;
-
   const cwd = dirname(file);
   const _branch = Promise.resolve(options.branch || getCurrentBranch(cwd));
   const _remote = Promise.resolve(options.remote || _branch.then(getRemoteForBranch(cwd)));
+
   const logger = setupLogger(isConsole ? verbosity : 'silent');
   logger.debug('Initialized program');
-  logger.debug('urlOnly', urlOnly);
   logger.verbose('Options passed to scopen.js:', options);
 
   return Promise.all([
@@ -70,7 +69,7 @@ export default options => {
     const repo = matchingRemote.getRepo(backrefs);
     logger.verbose('Got repo from remote:', repo);
     const path = relativePath(root, file);
-    console.log(cwd, root, path);
+
     logger.verbose('Got path from project root to file:', path);
 
     const url = template(matchingRemote.urlTemplate, {
