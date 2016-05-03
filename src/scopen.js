@@ -70,6 +70,7 @@ export default options => {
     const repo = matchingRemote.getRepo(backrefs);
     logger.verbose('Got repo from remote:', repo);
     const path = relativePath(root, file);
+    console.log(cwd, root, path);
     logger.verbose('Got path from project root to file:', path);
 
     const url = template(matchingRemote.urlTemplate, {
