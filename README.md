@@ -1,11 +1,7 @@
-# scopen (WIP)
+# scopen
 Open a file in its source-control remote web interface
 
 [![Build Status](https://travis-ci.org/andrewbranch/scopen.svg?branch=master)](https://travis-ci.org/andrewbranch/scopen)
-
-## TODO
- - Write Atom plugin
- - Support more git remotes
 
 ## Installation
 ```shell
@@ -29,6 +25,6 @@ Options:
 ```
 
 ## Contributing
-Please do! Once I add tests and CI, it will run ESLint automatically. In the meantime, please make sure contributions pass the included .eslintrc rules (AirBnb’s configuration).
+Please do, especially to add support for other git remotes. AirBnb’s ESLint rules are checked as part of the test suite, so make sure your editor is set up to respect the provided .eslintrc (or at least run `npm test` before pushing).
 
 To run locally, clone the project and run `npm link` from within the project directory. Then `scopen` will be available from the command line, linked to your local installation. `npm link` must be run again between changes.
