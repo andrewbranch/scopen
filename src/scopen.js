@@ -17,7 +17,7 @@ const remotes = [
 
 export default options => {
   const {
-    verbosity = 'silent',
+    verbosity = 'error',
     cmd = 'open',
     application,
     file,
