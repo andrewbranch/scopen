@@ -4,7 +4,6 @@ import getRemoteURL from './util/get-remote-url';
 import getProjectRoot from './util/get-project-root';
 import getRemoteForBranch from './util/get-remote-for-branch';
 import relativePath from './util/relative-path';
-import template from './util/template';
 import setupLogger, { levels } from './util/logger';
 import { dirname } from 'path';
 import * as githubSsh from './remotes/github-ssh';
@@ -73,7 +72,7 @@ export default options => {
 
     logger.verbose('Got path from project root to file:', path);
 
-    const url = template(matchingRemote.urlTemplate, {
+    const url = matchingRemote.url({
       user,
       repo,
       branch,
