@@ -1,8 +1,9 @@
 # scopen (WIP)
 Open a file in its source-control remote web interface
 
+[![Build Status](https://travis-ci.org/andrewbranch/scopen.svg?branch=master)](https://travis-ci.org/andrewbranch/scopen)
+
 ## TODO
- - Write more tests
  - Write Atom plugin
  - Support more git remotes
 
