@@ -9,21 +9,16 @@ const stubs = {
   getProjectRoot: () => Promise.resolve(path.resolve('..')),
 };
 
-export default {
-  title: 'scopen',
-  test: () => {
-    test('url-only mode resolves to the URL', t => {
-      t.plan(2);
-      const scopen = proxyquire('../src/scopen', stubs).default;
-      const ret = scopen({
-        file: path.resolve(__dirname, 'index.js'),
-        urlOnly: true,
-      });
+test('scopen - url-only mode resolves to the URL', t => {
+  t.plan(2);
+  const scopen = proxyquire('../src/scopen', stubs).default;
+  const ret = scopen({
+    file: path.resolve(__dirname, 'util/get-cmd-stdout.js'),
+    urlOnly: true,
+  });
 
-      t.ok(ret instanceof Promise, 'returns a Promise');
-      ret.then(url => {
-        t.equal(url, 'https://github.com/andrewbranch/scopen/tree/master/test/index.js', 'resolved URL is correct');
-      }, t.fail);
-    });
-  },
-};
+  t.ok(ret instanceof Promise, 'returns a Promise');
+  ret.then(url => {
+    t.equal(url, 'https://github.com/andrewbranch/scopen/tree/master/test/util/get-cmd-stdout.js', 'resolved URL is correct');
+  }, t.fail);
+});

@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "babel src -d dist/src && cp package.json dist/",
-    "test": "eslint src/ && babel-tape-runner test/index.js | tap-spec",
+    "test": "eslint src/ && babel-tape-runner test/{,**/}*.js | tap-spec",
     "prepublish": "npm run build"
   },
   "repository": {
