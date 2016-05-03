@@ -16,7 +16,15 @@ const remotes = [
 ];
 
 export default options => {
-  const { verbosity, cmd, application, file, urlOnly, isConsole } = options;
+  const {
+    verbosity = 'silent',
+    cmd = 'open',
+    application,
+    file,
+    urlOnly = false,
+    isConsole = false,
+  } = options;
+
   const cwd = dirname(file);
   const _branch = Promise.resolve(options.branch || getCurrentBranch(cwd));
   const _remote = Promise.resolve(options.remote || _branch.then(getRemoteForBranch(cwd)));
@@ -25,7 +33,7 @@ export default options => {
   logger.debug('urlOnly', urlOnly);
   logger.verbose('Options passed to scopen.js:', options);
 
-  Promise.all([
+  return Promise.all([
     getProjectRoot(cwd),
     _remote.then(getRemoteURL(cwd)),
     _branch,
@@ -80,7 +88,7 @@ export default options => {
     const openCommand = `${cmd} ${args} ${url}`;
     logger.debug('Running:', openCommand);
 
-    return getCmdStdout(openCommand);
+    return getCmdStdout(openCommand).then(() => (urlOnly ? url : openCommand));
   }).catch(err => {
     logger.exitOnError = false;
     logger.error('An unknown error occurred.');
