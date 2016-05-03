@@ -1,6 +1,6 @@
 {
   "name": "scopen",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Open a file in its source-control remote web interface",
   "preferGlobal": true,
   "main": "dist/src/scopen.js",
