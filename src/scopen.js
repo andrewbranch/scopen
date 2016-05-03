@@ -24,6 +24,7 @@ export default options => {
     urlOnly = false,
     isConsole = false,
   } = options;
+
   const cwd = dirname(file);
   const _branch = Promise.resolve(options.branch || getCurrentBranch(cwd));
   const _remote = Promise.resolve(options.remote || _branch.then(getRemoteForBranch(cwd)));
